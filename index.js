@@ -1,70 +1,69 @@
-// const inputSearch=document.querySelector(".inputSearch");
+const buttonElem = document.querySelector(".btn");
+const buttonElem1 = document.querySelector(".btn1");
+const msgBox = document.querySelector(".message");
+const msgBox1 = document.querySelector(".messages");
+const msgBox2 = document.querySelector(".message1");
 
-const inputSearch='Create a widget that allows a user to enter a sentence of 5 or more words. When the user clicks a button the sentence should be analyzed.'
 
-const testBtn=document.querySelector(".testBtn");
-const demo=document.querySelector(".demo")
-console.log(inputSearch)
+buttonElem.addEventListener("click", () => { comparedGuess(); });
 
-testBtn.addEventListener("click", () => { searchWords(); });
+function comparedGuess() {
+    let holder=''
+    let guessNumber = document.getElementById("inputBox").value;
+    const inputSearch1 = guessNumber.split(" ");
 
-function searchWords(){
-    const inputSearch1=inputSearch.split(" ");
-    console.log(inputSearch1);
+    msgBox.innerHTML = `The length of the sentence is ${inputSearch1.length}`;
     const result = inputSearch1.filter(word => word.length > 4);
-    
-    console.log(result)
-    console.log(inputSearch1.length)
-    inputSearch1.forEach(item => console.log(item));
 
-    const intersection = inputSearch1.filter(element => result.includes(element));
-    console.log(intersection)
 
-    for(let i = 0; i < inputSearch1.length; i++) {
-             
-        // Loop for array2
-        for(let j = 0; j < result.length; j++) {
-             
-            // Compare the element of each and
-            // every element from both of the
-            // arrays
-            if(inputSearch1[i] === result[j]) {
-             
-                // Return if common element found
-                inputSearch1[i].style.color='green'
-            }
+    for(let i=0; i<inputSearch1.length; i++){
+        newVar=inputSearch1[i];
+        if(newVar.length>4){
+            holder+=`<mark class="colorWords"> ${newVar}</mark>`
+        }else{
+            holder+= " "+newVar
         }
     }
+    msgBox1.innerHTML=holder
 
-    // if(inputSearch1==result){
-
-
-
-    // }
-    // function findCommonElement(array1, array2) {
-     
-    //     // Loop for array1
-    //     for(let i = 0; i < array1.length; i++) {
-             
-    //         // Loop for array2
-    //         for(let j = 0; j < array2.length; j++) {
-                 
-    //             // Compare the element of each and
-    //             // every element from both of the
-    //             // arrays
-    //             if(array1[i] === array2[j]) {
-                 
-    //                 // Return if common element found
-    //                 return true;
-    //             }
-    //         }
-    //     }
-         
-    //     // Return if no common element exist
-    //     return false;
-    // }
+    console.log(inputSearch1)
+    var longestWord = inputSearch1.reduce(function(longestWord, currentWord) {
+        if(currentWord.length > longestWord.length)
+           return currentWord;
+        else
+           return longestWord;
+      });
+    console.log(longestWord)
+    msgBox2.innerHTML=`The longest word in your sentence is <mark class="colorWord">${longestWord}</mark>`
 
 
-
-    demo.innerHTML=inputSearch
 }
+
+buttonElem1.addEventListener("click", () => { hideWords();
+
+
+});
+
+function hideWords() {
+    let guessNumber = document.getElementById("inputBox").value;
+    const inputSearch1 = guessNumber.split(" ");
+    let holder=''
+
+
+    for(let i=0; i<inputSearch1.length; i++){
+        newVar=inputSearch1[i];
+        if(newVar.length<=4){
+            holder+=`<mark class="hidden"> ${newVar}</mark>`
+        }else{
+            holder+= " "+newVar
+        }
+    }
+    msgBox1.innerHTML=holder
+
+}
+
+
+
+
+
+

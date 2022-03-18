@@ -2,46 +2,36 @@ const buttonElem = document.querySelector(".btn");
 const buttonElem1 = document.querySelector(".btn1");
 const msgBox = document.querySelector(".message");
 const msgBox1 = document.querySelector(".messages");
-const msgBox2 = document.querySelector(".message1");
+const checkbox = document.querySelector(".checkbox")
 
+buttonElem.addEventListener("click", () => { highlightWords();countWords() });
 
-buttonElem.addEventListener("click", () => { comparedGuess(); });
-
-function comparedGuess() {
+function highlightWords() {
     let holder=''
-    let guessNumber = document.getElementById("inputBox").value;
+    let guessNumber = document.getElementById("inputBox").value.replaceAll('.', '');
     const inputSearch1 = guessNumber.split(" ");
 
-    msgBox.innerHTML = `The length of the sentence is ${inputSearch1.length}`;
-    const result = inputSearch1.filter(word => word.length > 4);
-
-
+    longestWord=findLongestWords()
+    
     for(let i=0; i<inputSearch1.length; i++){
         newVar=inputSearch1[i];
         if(newVar.length>4){
-            holder+=`<mark class="colorWords"> ${newVar}</mark>`
+            if(newVar.length==longestWord){
+                holder+=`<mark class="colorWord"> ${newVar}</mark>`
+            }else{holder+=`<mark class="colorWords"> ${newVar}</mark>`}
         }else{
-            holder+= " "+newVar
-        }
+            holder+=` ${newVar}`        }
     }
-    msgBox1.innerHTML=holder
-
-    console.log(inputSearch1)
-    var longestWord = inputSearch1.reduce(function(longestWord, currentWord) {
-        if(currentWord.length > longestWord.length)
-           return currentWord;
-        else
-           return longestWord;
-      });
-    console.log(longestWord)
-    msgBox2.innerHTML=`The longest word in your sentence is <mark class="colorWord">${longestWord}</mark>`
-
-
+    return msgBox1.innerHTML=holder
 }
-
-buttonElem1.addEventListener("click", () => { hideWords();
-
-
+checkbox.addEventListener("click", () => { 
+    //hideWords();
+    if (checkbox.checked == true){
+        hideWords();
+    }else{
+        highlightWords();
+    }
+   
 });
 
 function hideWords() {
@@ -49,18 +39,37 @@ function hideWords() {
     const inputSearch1 = guessNumber.split(" ");
     let holder=''
 
-
     for(let i=0; i<inputSearch1.length; i++){
         newVar=inputSearch1[i];
         if(newVar.length<=4){
             holder+=`<mark class="hidden"> ${newVar}</mark>`
         }else{
-            holder+= " "+newVar
+            holder+= ` ${newVar}`
         }
     }
-    msgBox1.innerHTML=holder
-
+    return msgBox1.innerHTML=holder
 }
+
+
+function countWords(){
+    let guessNumber = document.getElementById("inputBox").value;
+    const inputSearch1 = guessNumber.split(" ");
+    return msgBox.innerHTML = `The length of the sentence is ${inputSearch1.length}`
+}
+
+function findLongestWords(){
+    let guessNumber = document.getElementById("inputBox").value.replaceAll('.', '') ;
+    const inputSearch1 = guessNumber.split(" ");
+
+    let longestWord=inputSearch1.reduce(function(longestWord, currentWord) {
+        if(currentWord.length >= longestWord.length)
+           return currentWord;
+        else
+           return longestWord;
+      });
+    return longestWord.length
+}
+
 
 
 

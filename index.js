@@ -56,11 +56,27 @@ function hideWords() {
     return msgBox1.innerHTML = holder
 }
 
-
+let numberHolder=[]
 function countWords() {
+    //let colorBox=document.querySelector('.colorBox')
     let inputSearch1 = userInputHolder()
+    numberHolder.push(inputSearch1.length)
+    checkNumberHolder()
+    var sum = numberHolder.reduce(function (x, y) {
+        return x + y;
+    }, 0);
+    let average =(sum/(numberHolder.length))
+    // console.log(inputSearch1.length)
+    // console.log(average)
+    // console.log(inputSearch1.length>=average)
+    if(inputSearch1.length>=average){
+        document.getElementById('test').style.color = "green";
+    }else{
+        document.getElementById('test').style.color = "orange";
+    }
     return msgBox.innerHTML = `The length of the sentence is ${inputSearch1.length}`
 }
+
 
 function findLongestWords() {
     let inputSearch1 = userInputHolder()
@@ -75,10 +91,11 @@ function findLongestWords() {
 
 sentenceHolder = [];
 
+
 function displayLastSentences() {
     let guessNumber = document.getElementById("inputBox").value
+    checkSentenceHolder()
     sentenceHolder.push(guessNumber);
-    let inputSearch1 = userInputHolder()
 
     let text = "";
     for (let i = 0; i < sentenceHolder.length; i++) {
@@ -100,14 +117,13 @@ function clickedSentence(sentence) {
 
     reCountWords()
 
-    longestWord = inputSearch1.reduce(function (longestWord, currentWord) {
-        if (currentWord.length >= longestWord.length)
-            return currentWord;
-        else
-            return longestWord;
-    });
-
     function reHighlightWords() {
+        longestWord = inputSearch1.reduce(function (longestWord, currentWord) {
+            if (currentWord.length >= longestWord.length)
+                return currentWord;
+            else
+                return longestWord;
+        });
         let holder = ''
         for (let i = 0; i < inputSearch1.length; i++) {
             newVar = inputSearch1[i];
@@ -124,15 +140,21 @@ function clickedSentence(sentence) {
 
     reHighlightWords()
 
-    checkbox.addEventListener("click", () => {
+    checkbox.addEventListener("click", (evt) => {
         if (checkbox.checked == true) {
-            reHideWords()
+            reHideWords();
         } else {
-            reHighlightWords()
+            reHighlightWords();
         }
     });
 
     function reHideWords() {
+        longestWord = inputSearch1.reduce(function (longestWord, currentWord) {
+            if (currentWord.length >= longestWord.length)
+                return currentWord;
+            else
+                return longestWord;
+        });
         let holder = ''
         for (let i = 0; i < inputSearch1.length; i++) {
             newVar = inputSearch1[i];
@@ -151,3 +173,20 @@ function clickedSentence(sentence) {
 
 const ul = document.querySelector(".sentences");
 displaySentence.addEventListener('click', clickedSentence)
+
+function checkSentenceHolder(){
+    if(sentenceHolder.length==5){
+        return sentenceHolder.shift()
+    }else{
+        return sentenceHolder=sentenceHolder;
+    }
+}
+
+function checkNumberHolder(){
+    if(numberHolder.length==5){
+        return numberHolder.shift()
+    }else{
+        return numberHolder=numberHolder;
+    }
+}
+

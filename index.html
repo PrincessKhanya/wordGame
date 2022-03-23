@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,34 +8,39 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style1.css">
-    
+
 </head>
+
 <body>
     <div class="main container">
         <div class="highlightWords">
             <div>
                 <p>Please enter a sentance</p>
-                <input type="text" name="name" id="inputBox" placeholder="Enter a sentenece"> 
+                <input class="slider" type="range" value="24" min="0" max="100" oninput="this.nextElementSibling.value = this.value">
+                <output>24</output>
+                <br>
+                <input type="text" name="name" id="inputBox" placeholder="Enter a sentenece">
                 <button class="btn">Analyze</button>
                 <input type="checkbox" class="checkbox" name="vehicle1" value="Bike">
                 <label for="vehicle1">Hide words that are less then or equal to 4</label>
             </div>
             <div class="messages">
-        
+
             </div>
             <div class="colorBox" id="test"></div>
             <div class="message">
-        
+
             </div>
         </div>
         <div class="displaySentence">
-           <ul class='sentences'>
-               
+            <ul class='sentences'>
 
-           </ul> 
+
+            </ul>
 
         </div>
     </div>
     <script src="index.js"></script>
 </body>
+
 </html>

@@ -70,9 +70,9 @@ function countWords() {
     // console.log(average)
     // console.log(inputSearch1.length>=average)
     if(inputSearch1.length>=average){
-        document.getElementById('test').style.color = "green";
+        document.getElementById('test').style.background = "green";
     }else{
-        document.getElementById('test').style.color = "orange";
+        document.getElementById('test').style.background = "orange";
     }
     return msgBox.innerHTML = `The length of the sentence is ${inputSearch1.length}`
 }

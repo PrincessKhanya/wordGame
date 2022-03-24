@@ -4,13 +4,20 @@ const msgBox = document.querySelector(".message");
 const msgBox1 = document.querySelector(".messages");
 const checkbox = document.querySelector(".checkbox")
 const displaySentence = document.querySelector(".displaySentence")
+const colourLabel = document.querySelector(".colourLabel")
 
-buttonElem.addEventListener("click", () => { highlightWords(); countWords(); displayLastSentences() });
+buttonElem.addEventListener("click", () => { highlightWords(); countWords(); displayLastSentences();colourLabel.classList.remove("hidden"); });
 
 function userInputHolder() {
+    let sliderValue=document.getElementById('textInput').value
     let guessNumber = document.getElementById("inputBox").value.replaceAll('.', '');
-    const inputSearch1 = guessNumber.split(" ");
-    return inputSearch1
+    if(guessNumber.length>sliderValue){
+        return inputSearch1= ''
+    }else{
+        const inputSearch1 = guessNumber.trim( ).split(" ");
+        return inputSearch1
+    }
+    
 }
 
 function highlightWords() {
@@ -58,7 +65,6 @@ function hideWords() {
 
 let numberHolder=[]
 function countWords() {
-    //let colorBox=document.querySelector('.colorBox')
     let inputSearch1 = userInputHolder()
     numberHolder.push(inputSearch1.length)
     checkNumberHolder()
@@ -66,13 +72,12 @@ function countWords() {
         return x + y;
     }, 0);
     let average =(sum/(numberHolder.length))
-    // console.log(inputSearch1.length)
-    // console.log(average)
-    // console.log(inputSearch1.length>=average)
     if(inputSearch1.length>=average){
         document.getElementById('test').style.background = "green";
+        document.getElementById('tests').innerHTML = "Green means the length of the sentence entered is greater then average length of the last five sentence";
     }else{
         document.getElementById('test').style.background = "orange";
+        document.getElementById('tests').innerHTML = "Orange means the length of the sentence entered is less then average length of the last five sentence";
     }
     return msgBox.innerHTML = `The length of the sentence is ${inputSearch1.length}`
 }
@@ -89,13 +94,17 @@ function findLongestWords() {
     return longestWord.length
 }
 
-sentenceHolder = [];
+let sentenceHolder = [];
+if(localStorage['sentenceHolder']){
+    sentenceHolder = JSON.parse(localStorage.getItem('sentenceHolder'))
+}
 
 
 function displayLastSentences() {
     let guessNumber = document.getElementById("inputBox").value
     checkSentenceHolder()
     sentenceHolder.push(guessNumber);
+    localStorage.setItem('sentenceHolder', JSON.stringify(sentenceHolder))
 
     let text = "";
     for (let i = 0; i < sentenceHolder.length; i++) {
@@ -189,4 +198,11 @@ function checkNumberHolder(){
         return numberHolder=numberHolder;
     }
 }
+
+function updateTextInput(val) {
+    document.getElementById('textInput').value=val; 
+}
+
+
+
 

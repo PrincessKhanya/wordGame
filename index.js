@@ -5,24 +5,41 @@ const msgBox1 = document.querySelector(".messages");
 const checkbox = document.querySelector(".checkbox")
 const displaySentence = document.querySelector(".displaySentence")
 const colourLabel = document.querySelector(".colourLabel")
+const errorMsg = document.querySelector(".errorMsg")
 
-buttonElem.addEventListener("click", () => { highlightWords(); countWords(); displayLastSentences();colourLabel.classList.remove("hidden"); });
+buttonElem.addEventListener("click", () => {
+    let guessNumber = document.getElementById("inputBox").value
+    let sliderValue=document.getElementById('textInput').value
+    if(guessNumber.length != 0){
+        if(guessNumber.length<=sliderValue){
+            highlightWords(); countWords(); displayLastSentences();colourLabel.classList.remove("hidden");
+        }else if(guessNumber.length>sliderValue){
+            inputSearch1= ''
+            errorMsg.innerHTML='Please use the slider to select the length of the sentence you want to use'
+            setTimeout(() => { errorMsg.classList.remove("hidden"); }, 500);
+            setTimeout(() => { location.reload() }, 7000); 
+        }   
+    }else if (guessNumber.length == 0){
+        errorMsg.innerHTML="Please enter a sentence"
+        setTimeout(() => { errorMsg.classList.remove("hidden"); }, 500);
+        setTimeout(() => { location.reload() }, 7000);
+    }
+});
 
 function userInputHolder() {
-    let sliderValue=document.getElementById('textInput').value
-    let guessNumber = document.getElementById("inputBox").value.replaceAll('.', '');
-    if(guessNumber.length>sliderValue){
-        return inputSearch1= ''
-    }else{
-        const inputSearch1 = guessNumber.trim( ).split(" ");
-        return inputSearch1
-    }
-    
+    let guessNumber = document.getElementById("inputBox").value;
+    const inputSearch1 = guessNumber.trim( ).replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g, '').split(" ");
+    return inputSearch1    
 }
 
 function highlightWords() {
     let holder = ''
     let inputSearch1 = userInputHolder()
+    if (inputSearch1 != ''){
+        errorMsg.innerHTML="PLease enter a sentence"
+    }else{
+        return inputSearch1
+    }
     longestWord = findLongestWords()
 
     for (let i = 0; i < inputSearch1.length; i++) {
@@ -116,7 +133,6 @@ function displayLastSentences() {
 }
 
 function clickedSentence(sentence) {
-    console.log(sentence.target.innerHTML)
     let guessNumber = sentence.target.innerHTML;
     const inputSearch1 = guessNumber.split(" ");
 
